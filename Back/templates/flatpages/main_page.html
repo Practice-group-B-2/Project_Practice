@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="static/main.css">
+</head>
+<body>
+    <div class="Headered">
+        <p>Hello</p>
+        <h1>{{request.user.username}}</h1> </a>
+        <h2>{{request.user.first_name}}</h2>
+    </div>
+
+    <div id="auth">
+        <a href="{% url 'users:login' %}">Login</a><br>
+        <a href="{% url 'users:registration' %}">Registration</a>
+
+    </div>
+</body>
+</html>
