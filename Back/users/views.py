@@ -45,4 +45,4 @@ def register(request):
         form = BaseRegisterForm()
 
     return render(request, 'flatpages/users/registration.html', {'form': form})
-# Create your views here.
+
