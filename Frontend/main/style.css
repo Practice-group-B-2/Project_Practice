@@ -1,0 +1,205 @@
+/* Общие настройки */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Philosopher", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  background-image: url('mainPageBGremake.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Стиль для кнопочек(unified-button) */
+.unified-button {
+  min-width: 180px;
+  height: 50px;
+  padding: 10px;
+  font-size: 16px;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: linear-gradient(145deg, #3bbf7f, #2e9d65);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: "Philosopher", sans-serif;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.unified-button:hover {
+  background: linear-gradient(145deg, #49cf89, #3ca972);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Хэдер */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  padding: 10px 20px;
+
+  background-color: rgba(25, 78, 50, 0.75);
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Кнопки в навигации хэдера и футера */
+.headerNav-buttons,
+.footerNav-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.headerNav-buttons button,
+.footerNav-buttons button {
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: "Philosopher", sans-serif;
+  padding: 8px 16px;
+  background: linear-gradient(145deg, #3bbf7f, #2e9d65);
+  backdrop-filter: blur(2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.headerNav-buttons button:hover,
+.footerNav-buttons button:hover {
+  background: linear-gradient(145deg, #49cf89, #3ca972);
+  transform: translateY(-1px);
+}
+
+/* Кнопки в футере */
+.footerNav-buttons {
+  margin-right: auto;
+}
+
+/* Кнопки авторизации и калькулятора */
+.auth-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.calculateCalory-button button,
+.auth-buttons button,
+.doctorlink-button button {
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 3% 5%;
+  font-family: "Philosopher", sans-serif;
+  padding: 8px 16px;
+  background: linear-gradient(145deg, #3bbf7f, #2e9d65);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.calculateCalory-button button:hover,
+.auth-buttons button:hover,
+.doctorlink-button button:hover {
+  background: linear-gradient(145deg, #49cf89, #3ca972);
+  transform: translateY(-1px);
+}
+
+/* контент */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-bottom: 60px; 
+}
+
+/* Основной контейнер */
+.container {
+  display: flex;
+  max-width: 1200px;
+  width: 100%;
+  padding: 40px 0;
+  gap: 20px;
+}
+
+/* Левая и правая реклама */
+.ad-left, .ad-right {
+  flex: 0 0 200px;
+  background-color: #e0e0e0;
+  height: 300px;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Центральный блок */
+.center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Выпадающий список */
+.dropdown-box {
+  backdrop-filter: blur(5px);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dropdown-box select {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 16px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 2px solid #45c883;
+  font-family: "Philosopher", sans-serif;
+  color: white;
+  background: linear-gradient(145deg, #4fe58c, #38b975);
+  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.2),
+              0 4px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.dropdown-box select:hover {
+  background: linear-gradient(145deg, #66f2a1, #44d283);
+  transform: scale(1.01);
+}
+
+.dropdown-box select option {
+  background: #f0fff5;
+  color: #1f4d38;
+  padding: 10px;
+}
+
+
+/* Футтер */
+footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: right;
+  padding: 10px 20px;
+  box-sizing: border-box;
+
+  background-color: rgba(25, 78, 50, 0.75); 
+  backdrop-filter: blur(4px);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
+}
