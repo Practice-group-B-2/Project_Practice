@@ -1,0 +1,148 @@
+body{
+  margin: 0;
+  top: 0;
+  left: 0;
+  display: flex; 
+  flex-direction: column;
+  font-family: "Philosopher", sans-serif;
+}
+
+.btn__container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  opacity: 0.8;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+}
+
+.btn__wrapper{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin: 15px 15px 15px 15px;
+}
+
+.btn__wrapper button{
+  padding: 10px 10px;
+  border: none;
+  color: white;
+  background-color: #50C878;
+  transition: all 0.4s ease-in-out; 
+  font-size: 20px;
+  cursor: pointer;
+  gap: 8px;
+  position: relative;
+}
+
+.btn__wrapper button:hover{
+  color: #50C878;
+  background-color: white;
+}
+
+
+/* Стили для выпадающего меню */
+.dropdown__menu {
+  /*z-index: 100;*/
+  position: absolute;
+  top: 100%;
+  right: 0;       
+  left: auto;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  margin-top: 5px;
+  min-width: 180px;
+  display: none;
+  flex-direction: column;
+  padding: 5px 0;
+}
+
+/* Пункты меню */
+.dropdown__menu div {
+  padding: 10px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  color: #333;
+  transition: all 0.4s ease-in-out; 
+}
+
+.dropdown__menu div:hover {
+  background-color: #50C878;
+  color: white;
+}
+
+/* Класс для показа меню */
+.show {
+  display: flex;
+}
+
+.curren__role{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 70px;
+  /*margin-right: 150px;*/
+  font-size: 20px;
+}
+
+
+/*карточки*/
+ .cards-container {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 20px; 
+  width: 90%;
+  max-width: 1500px; 
+  margin: 0 auto;
+}
+
+.card {
+  border: 2px solid #28a745; 
+  border-radius: 8px;
+  width: calc((100% / 3) - 13.33px); 
+  box-sizing: border-box;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 300px;
+  align-items: center;
+}
+
+.card-content {
+  white-space: pre-line; 
+  font-size: 26px;
+  color: #155724; 
+}
+
+.delete-btn {
+  margin-top: 25px;
+  padding: 6px 18px;
+  background-color: #28a745;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-items: center;
+}
+
+.delete-btn:hover {
+  background-color: #1e7e34;
+}
+
+@media (max-width: 700px) {
+  .card {
+    width: calc((100% / 2) - 10px);
+  }
+}
+
+@media (max-width: 400px) {
+  .card {
+    width: 100%; 
+  }
+}

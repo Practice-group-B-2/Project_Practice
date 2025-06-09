@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>About you</title>
+	<link rel="stylesheet" href="input.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css">
+</head>
+<body>
+	<div class="form__wraper">
+		<form class="form__about__user">
+			<div class="class">
+				<div class="title">
+					<h1>Привет, давай знакомится! Меня зовут [ввести имя маскота], расскажи о себе<h1>
+					<div class="circle">
+                        <img src="2.jpg" alt="Маскот" style="width: 100px; height: 100px; border-radius: 50%;">
+                    </div>
+				</div>
+					<div class="form__content">
+						<p>	Меня завут</p>
+				        <input type="" name="" class="" placeholder="напиши свое имя">
+
+				        <p>Сколько тебе лет?</p>
+				        <input type="" name="" class="" placeholder="мой возраст">
+
+				        <p>Какой у тебя вес?</p>
+				        <input type="" name="" class="" placeholder="мой вес">
+
+				        <p>Какая у тебя переносимость?</p>
+				        <input type="" name="" class="" placeholder="Моя переносимость">
+
+
+                       <p>Какую диету тебе нужно соблюдать?</p>
+				       <div class="form__content__diet">
+                            <input type="text" id="DietInput" placeholder="Выберите диету" readonly onclick="toggleDropdown()" />
+                            <i class="fa-solid fa-caret-down icon"></i>
+                       </div>
+
+                       <div class="dropdown__diet">
+                            <div class="dropdown__content__diet">
+                                <div onclick="selectItem('Без белка (фенилкетонурия)')"><div class="highlight"></div>Без белка (фенилкетонурия)</div>
+                                <div onclick="selectItem('Без глютена (целиакия)')"><div class="highlight"></div>Без глютена (целиакия)</div>
+                                <div onclick="selectItem('Без сахара (диабет)')"><div class="highlight"></div>Без сахара (диабет)</div>
+                            </div>
+                        </div>
+
+
+                       <p>Я...</p>
+                       <div class="form__content__role">
+                          	<input type="text" id="RoleInput" placeholder="Выберите диету" readonly onclick="toggleDropdownRole()" />
+                            <i class="fa-solid fa-caret-down icon"></i>
+                       </div>
+                       <div class="dropdown__role">
+                       	<div class="dropdown__content__role">
+                       		<div onclick="selectItemRole('Мне нужно соблюдать диету')"><div class="highlight"></div>Мне нужно соблюдать диету</div>
+                            <div onclick="selectItemRole('Я помогаю соблюдать диету')"><div class="highlight"></div>Я помогаю соблюдать диету</div>
+                            <div onclick="selectItemRole('Я доктор')"><div class="highlight"></div>Я доктор</div>
+                       	</div>
+                       </div>
+				      
+				       <button>Подвердить</button>
+					</div>
+			</div>
+		</form>
+	</div>
+<script src="js.js"></script>
+
+</body>
+</html>

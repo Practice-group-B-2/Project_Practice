@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Профиль</title>
+	<link rel="stylesheet" href="profile.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="btn__container">
+  <div class="btn__wrapper">
+    <button>Логин почта пароль</button>
+
+    <!-- Кнопка с выпадающим меню -->
+    <button id="userTypeBtn">
+      Сменить тип пользователя <i class="fa-solid fa-caret-down"></i>
+
+      <!-- Выпадающее меню -->
+      <div id="userTypeMenu" class="dropdown__menu">
+        <div data-value="admin">Администратор</div>
+        <div data-value="user">Пользователь</div>
+      </div>
+    </button>
+    <button>Создать новую карточку пользователя</button>
+  </div>
+</div>
+
+<div class="curren__role">
+	<p id="currentValue">Текущий тип пользователя: Не выбран</p>
+</div>
+
+<div class="cards-container">
+  <div class="card">
+    <div class="card-content">
+      ИМЯ: Иван<br />
+      РОСТ: 167<br />
+      ВЕС: 80<br />
+      Диабет
+    </div>
+    <button class="delete-btn">Удалить</button>
+  </div>
+
+  <div class="card">
+    <div class="card-content">
+      ИМЯ: Мария<br />
+      РОСТ: 160<br />
+      ВЕС: 55<br />
+      Целякия
+    </div>
+    <button class="delete-btn">Удалить</button>
+  </div>
+
+  <div class="card">
+    <div class="card-content">
+      ИМЯ: Алексей<br />
+      РОСТ: 175<br />
+      ВЕС: 90<br />
+      Диабет
+    </div>
+    <button class="delete-btn">Удалить</button>
+  </div>
+
+  <div class="card">
+    <div class="card-content">
+      ИМЯ: Вася<br />
+      РОСТ: 168<br />
+      ВЕС: 70<br />
+      Лишний вес
+    </div>
+    <button class="delete-btn">Удалить</button>
+  </div>
+</div>
+
+<script src="js.js"></script>
+</body>
+</html>
