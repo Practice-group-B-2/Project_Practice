@@ -8,7 +8,7 @@
 <body>
     <div class="Headered">
         <p>Hello</p>
-        <h1>{{request.user.username}}</h1> </a>
+        <a href="{% url 'users:account' pk=request.user.id %}"><h1>{{request.user.username}} {{ request.user. }}</h1> </a>
         <h2>{{request.user.first_name}}</h2>
     </div>
 

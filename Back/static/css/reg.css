@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   min-height: 100vh;
-  background: url('img.jpg') no-repeat;
+  background: url("{% static 'css/img/img.jpg'") no-repeat;
   background-size: cover;
   background-position: center;
 }
@@ -66,7 +66,7 @@
   transition: all 0.7s ease-in-out; 
 }
   
-.reg__btn button{
+.reg__btn input {
   border: none;
   border-radius: 7px;
   background: #19d12b;
@@ -81,7 +81,7 @@
 
 .reg__btn a{
   text-decoration: none;
-  color: white;
+  color: black;
   font-size: 25px;
 }
 

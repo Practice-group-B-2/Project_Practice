@@ -1,25 +1,70 @@
 <!DOCTYPE html>
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" type="text/CSS" href="{% static 'css/registretion.css'%}">
-</head>
-<body>
-{% block content %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <p>Создавая аккаунт вы соглашаетесь на правила сайта<a href="/license/"> Правила пользования</a>.</p>
-    <input type="submit" value="Зарегестрироваться">
-</form>
+    <html lang="en">
+    <head>
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Регистрация</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css">
+        <link rel="stylesheet" type="text/CSS" href="{% static 'css/reg.css'%}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    </head>
 
-{%endblock content%}
-  <div class="container signin">
-    <p>Уже есть аккаунт? <a href="/user/login/" class="enter">Enter</a>.</p>
 
-</body>
+    <body>
+    {% block content %}
+    <div class="reg__cont">
+      <form class="reg__form">
+        <div class="form">
+         <div class="logo">
+            <h1>Регистрация</h1>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form__group">
+                {{ form.first_name }}
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="form__group">
+                {{ form.last_name }}
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="form__group">
+                {{ form.username }}
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="form__group">
+                {{ form.email }}
+                <i class="fa-solid fa-envelope"></i>
+            </div>
+            <div class="form__group">
+                {{ form.password1 }}
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <div class="form__group">
+                {{ form.password2 }}
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <div class="reg__btn" style="color:black">
+
+            <p >Создавая аккаунт вы соглашаетесь на правила сайта
+                <div class="">
+                    <a href="/license/"> Правила пользования</a>.</p>
+                </div>
+                <div>
+                <input type="submit" name="reg-btn" value="Зарегестрироваться">
+                <a href="{% url 'users:login'%}" class="enter">Enter</a>
+            </div>
+            </div>
+        </form>
+
+    {%endblock content%}
+     </div>
+      </form>
+    </div>
+    </body>
 </html>

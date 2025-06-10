@@ -10,6 +10,7 @@ class UserProfile(models.Model):
         ('lactose', 'Непереносимость лактозы'),
         ('none', 'Нет заболеваний'),
     )
+
     height = models.PositiveIntegerField(
         validators=[
             MinValueValidator(100, message='Рост не может быть меньше 100 см'),
@@ -30,14 +31,18 @@ class UserProfile(models.Model):
         help_text='Введите ваш вес в килограммах',
         default=70.0  # Среднее значение веса
     )
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,
+        help_text='Имя',
+    )
     sickness = models.CharField(
         max_length=50,
         choices=SICKNESS_CHOICES,
         default='none',
         verbose_name='Заболевание'
     )
-    
+
+
+
     def __str__(self):
         return f'Профиль пользователя {self.user.username}'
 
@@ -46,7 +51,9 @@ class UserProfile(models.Model):
         verbose_name_plural = 'Профили пользователей'
 
 
-class Profile_Status(models.Model):
+
+
+class profile_Status(models.Model):
     Profile_Status=(
         ("Doctor","Доктор"),
         ("Helper","Помошник"),
