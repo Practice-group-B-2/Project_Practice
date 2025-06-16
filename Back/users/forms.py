@@ -70,7 +70,7 @@ class BaseRegisterForm(UserCreationForm):
     agree_to_terms = forms.BooleanField(
         required=True,
         label="Согласен с условиями",
-        widget=forms.CheckboxInput(attrs={'class': 'form__group'})
+        widget=forms.CheckboxInput(attrs={'class': ''})
     )
 
     class Meta:
@@ -82,6 +82,7 @@ class BaseRegisterForm(UserCreationForm):
             "email",
             "password1",
             "password2",
+
         )
 
     def clean(self):
@@ -145,7 +146,21 @@ class InfoAbout(forms.Form):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
-
+    username = forms.CharField(
+        label="Имя пользователя",
+        widget=forms.TextInput(attrs={
+            'class': 'form__group',
+            'placeholder': 'Введите ваш логин',
+            'required': True
+        }),
+        help_text="Введите ваш логин"
+    )
+    password = forms.CharField(
+        label="Пароль",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form__group',
+            'placeholder': 'Введите пароль',
+            'required': True
+        }),
+    )
 

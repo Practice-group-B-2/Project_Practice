@@ -1,32 +1,51 @@
-{%load static%}
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Вход</title>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css">
-	<link rel="stylesheet" type="text/CSS" href="{% static 'css/login.css'%}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css">
+    <link rel="stylesheet" type="text/CSS" href="{% static 'css/login.css'%}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 
+<body>
 {% block content %}
-<h2> Войти в систему </h2>
-<form method="post" action="{% url 'users:login' %}">
-  {% csrf_token %}
-  <h1>Log-in</h1>
-      <p>Please, use the following form to log-in:</p>
+    <div class="login__cont">
+        <form method="POST" action="{% url 'users:login' %}" class="login__form">
+            {% csrf_token %}
+            <div class="form">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                
+                <div class="logo">
+                    <h1>Вход</h1>
+                </div>
 
-          {% csrf_token %}
-          {{ Loginform.as_p }}
+                <div class="form__group">
+                    {{ form.username }}
+                    <i class="fa-solid fa-user"></i>
+                </div>
 
+                <div class="form__group">
+                    {{ form.password }}
+                    <i class="fa-solid fa-lock"></i>
+                </div>
 
-          <p><input type="submit" value="Log-in"></p>
-    </form>
-    {% for message in messages %}
-        <div class="message {{ message.tags }}">
-            {{ message }}
-        </div>
-    {% endfor %}
-
-{% endblock%}
+                <div class="login__btn">
+                    <input type="submit" value="Войти">
+                    <a class="link-login" href="{% url 'users:registration'%}">Регистрация</a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+</body>
+</html>

@@ -1,21 +1,100 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="static/main.css">
+  <meta charset="UTF-8" />
+  <title>Главная страница</title>
+
+  <!-- Шрифты и иконки -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css">
+
+  <!-- Стили -->
+  <link rel="stylesheet" href="{% static 'css/styleForMain.css'%}" />
 </head>
 <body>
-    <div class="Headered">
-        <p>Hello</p>
-        <a href="{% url 'users:account' pk=request.user.id %}"><h1>{{request.user.username}} {{ request.user. }}</h1> </a>
-        <h2>{{request.user.first_name}}</h2>
-    </div>
 
-    <div id="auth">
-        <a href="{% url 'users:login' %}">Login</a><br>
-        <a href="{% url 'users:registration' %}">Registration</a>
+     <header>
+    <div class="calculateCalory-button">
+      <button class="unified-button" type="button" onclick="window.open('https://ya.ru/')">
+        Калькулятор калорий
+      </button>
 
     </div>
+
+    <div class="headerNav-buttons">
+      <button class="unified-button" onclick="window.open('#')">Книга рецептов</button>
+      <button class="unified-button" onclick="window.open('#')">Меню</button>
+      <button class="unified-button" onclick="window.open('#')">Справочник продуктов</button>
+    </div>
+
+    <div class="auth-buttons">
+      {% if user.is_authenticated %}
+        <div class="Headered">
+            <p>Добро пожаловать, {{ user.first_name }} {{ user.last_name }}!</p>
+            <a href="{% url 'users:account' pk=user.id %}">Профиль</a>
+            <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer; text-decoration: underline;">Выйти</button>
+            </form>
+        </div>
+      {% else %}
+        <div id="auth">
+            <a href="{% url 'users:login' %}">Войти</a>
+            <a href="{% url 'users:registration' %}">Регистрация</a>
+        </div>
+      {% endif %}
+    </div>
+  </header>
+ <!-- Серединка(осн.контент) -->
+  <main>
+    <div class="container">
+      <div class="ad-left">
+        <p>Реклама слева</p>
+      </div>
+
+      <div class="center">
+        <div class="dropdown-box">
+          <label for="menu">Выберите карточку пользователя:</label><br>
+          <select id="menu" onchange="navigate(this)">
+            <option disabled selected>-- Выберите --</option>
+            <option value="cars1.html">диабетик</option>
+            <option value="card2.html">диабетик и лишний вес</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="ad-right">
+        <p>Реклама справа</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Футтер -->
+  <footer>
+    <div class="footerNav-buttons">
+      <button class="unified-button" onclick="window.open('#')">Отчёты-графики</button>
+      <button class="unified-button" onclick="window.open('#')">Закупка продуктов</button>
+    </div>
+
+    <div class="doctorlink-button">
+      <button class="unified-button" type="button" onclick="window.open('https://ya.ru/')">
+        Ссылка на доктора
+      </button>
+    </div>
+  </footer>
+
+  <!-- Скрипт навигации(dropbox) -->
+  <script>
+    function navigate(select) {
+      const value = select.value;
+      if (value) {
+        window.location.href = value;
+      }
+    }
+  </script>
+
 </body>
 </html>

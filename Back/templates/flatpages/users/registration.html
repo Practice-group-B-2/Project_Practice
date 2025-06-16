@@ -18,53 +18,56 @@
     <body>
     {% block content %}
     <div class="reg__cont">
-      <form class="reg__form">
-        <div class="form">
-         <div class="logo">
-            <h1>Регистрация</h1>
-        </div>
-        <form method="post">
+        <form method="POST" class="reg__form">
             {% csrf_token %}
-            <div class="form__group">
-                {{ form.first_name }}
-                <i class="fa-solid fa-user"></i>
-            </div>
-            <div class="form__group">
-                {{ form.last_name }}
-                <i class="fa-solid fa-user"></i>
-            </div>
-            <div class="form__group">
-                {{ form.username }}
-                <i class="fa-solid fa-user"></i>
-            </div>
-            <div class="form__group">
-                {{ form.email }}
-                <i class="fa-solid fa-envelope"></i>
-            </div>
-            <div class="form__group">
-                {{ form.password1 }}
-                <i class="fa-solid fa-lock"></i>
-            </div>
-            <div class="form__group">
-                {{ form.password2 }}
-                <i class="fa-solid fa-lock"></i>
-            </div>
-            <div class="reg__btn" style="color:black">
-
-            <p >Создавая аккаунт вы соглашаетесь на правила сайта
-                <div class="">
-                    <a href="/license/"> Правила пользования</a>.</p>
+            <div class="form">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <div class="logo">
+                    <h1>Регистрация</h1>
                 </div>
-                <div>
-                <input type="submit" name="reg-btn" value="Зарегестрироваться">
-                <a href="{% url 'users:login'%}" class="enter">Enter</a>
-            </div>
+                <div class="form__group">
+                    {{ form.first_name }}
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="form__group">
+                    {{ form.last_name }}
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="form__group">
+                    {{ form.username }}
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="form__group">
+                    {{ form.email }}
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div class="form__group">
+                    {{ form.password1 }}
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <div class="form__group">
+                    {{ form.password2 }}
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <div class="reg__btn" style="color:black">
+                    <p>Создавая аккаунт вы соглашаетесь на правила сайта
+                        <div class="">
+                            <a href="/license/"> Правила пользования</a>
+                        </div>
+                        {{ form.agree_to_terms }}
+                    </p>
+                    <div>
+                        <input type="submit" name="reg-btn" value="Зарегистрироваться">
+                        <a href="{% url 'users:login'%}" class="enter">Войти</a>
+                    </div>
+                </div>
             </div>
         </form>
-
-    {%endblock content%}
-     </div>
-      </form>
     </div>
+    {%endblock content%}
     </body>
 </html>
