@@ -203,3 +203,17 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
 }
+a{
+  background: 40px linear-gradient(145deg, #4fe58c, #38b975);
+  border-radius: 10px ;
+  text-decoration: none;
+  color: white;
+
+}
+button{
+  background: 40px linear-gradient(145deg, #4fe58c, #38b975);
+  border-radius: 10px ;
+  text-decoration: none;
+  color: white;
+
+}

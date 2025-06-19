@@ -13,6 +13,17 @@
 
   <!-- Стили -->
   <link rel="stylesheet" href="{% static 'css/styleForMain.css'%}" />
+
+  <style>
+        body{
+        background-image : url("{% static '/img/mainimg.jpg' %}");
+                        
+         background-repeat: no-repeat;
+         height:110vh;
+         background-size:200vh;
+         background-position:center;
+        }
+        </style>
 </head>
 <body>
 
@@ -41,7 +52,7 @@
             </form>
         </div>
       {% else %}
-        <div id="auth">
+        <div class = "auth_a"id="auth">
             <a href="{% url 'users:login' %}">Войти</a>
             <a href="{% url 'users:registration' %}">Регистрация</a>
         </div>
