@@ -95,7 +95,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'DietApp',
         'USER': 'postgres',
-        'PASSWORD': '4417YRM^4#',
+        'PASSWORD': '12345',
         'HOST': 'localhost',
         'PORT': '',  # Leave empty to use the default PostgreSQL port (usually 5432)
     }
