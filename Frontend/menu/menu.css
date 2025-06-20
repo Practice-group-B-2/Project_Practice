@@ -1,0 +1,225 @@
+body {
+  margin: 0;
+  font-family: "Philosopher", sans-serif;
+  background-color: #f5f5f5;
+}
+
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Хэдер */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+  width: 100px;
+  height: 40px;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+}
+
+.summary span {
+  margin: 0 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.profile-btn {
+  padding: 6px 14px;
+  border: 1px solid #aaa;
+  background-color: #fafafa;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.2s ease;
+}
+
+.profile-btn:hover {
+  background-color: #e0e0e0;
+}
+
+/* Главная часть */
+.main-area {
+  display: flex;
+  flex: 1;
+}
+
+/* Сайдбар */
+.sidebar {
+  width: 220px;
+  background-color: #ffffff;
+  border-right: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 12px;
+}
+
+.sidebar button {
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #6fcf97, #27ae60);
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  text-align: left;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.sidebar button:hover {
+  background: linear-gradient(135deg, #27ae60, #6fcf97);
+  transform: translateY(-1px);
+}
+
+.sidebar button.active {
+  font-weight: bold;
+  background: linear-gradient(135deg, #2ecc71, #145a32);
+}
+
+/* Контент */
+.content-area {
+  flex: 1;
+  padding: 24px;
+  background-color: #fafafa;
+}
+
+.day-selector {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.day-selector button {
+  border: none;
+  padding: 8px 18px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #81c784, #4caf50);  
+  color: #fff;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.day-selector button:hover {
+  background: linear-gradient(135deg, #4caf50, #81c784);
+  transform: translateY(-1px);
+}
+
+.day-selector .active {
+  background: linear-gradient(135deg, #388e3c, #aed581);
+  color: #222;
+  border-bottom: 4px solid #2e7d32;
+  font-weight: bold;
+}
+
+/* Блок приёма пищи */
+.meal-block {
+  margin-bottom: 20px;
+  background: linear-gradient(to bottom right, #a3e78b, #7ed6a7);
+  border-radius: 10px;
+  padding: 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.meal-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.meal-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.meal-card {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  width: 160px;
+  text-align: center;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative; /* для кнопки удаления */
+}
+
+.photo {
+  height: 60px;
+  background-color: #ddd;
+  margin-bottom: 5px;
+  border-radius: 4px;
+}
+
+.desc span {
+  color: #999;
+  font-size: 14px;
+}
+
+.add-btn {
+  background: linear-gradient(135deg, #4caf50, #81c784);
+  border: none;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  font-size: 24px;
+  color: #fff;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.add-btn:hover {
+  background: linear-gradient(135deg, #81c784, #4caf50);
+  transform: scale(1.05);
+}
+
+/* Кнопка удаления карточки */
+.del-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #fff;
+  border: none;
+  color: #e74c3c;
+  font-size: 18px;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+  transition: background 0.2s, color 0.2s, transform 0.1s;
+  z-index: 2;
+}
+
+.del-btn:hover {
+  background: #e74c3c;
+  color: #fff;
+  transform: scale(1.1);
+}

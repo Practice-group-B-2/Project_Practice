@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Меню</title>
+  <link rel="stylesheet" href="menu.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" />
+</head>
+<body>
+  <div class="menu-container">
+    <!-- Хэдер -->
+    <header class="header">
+      <div class="logo"></div>
+      <div class="summary">
+        <span>Жиры: 85</span>
+        <span>Углеводы: 75</span>
+        <span>Белки</span>
+        <span>Калории</span>
+        <span>ФА</span>
+        <span>ХЕ</span>
+      </div>
+      <button class="profile-btn">Профиль</button>
+    </header>
+
+    <!-- Главная область -->
+    <div class="main-area">
+      <!-- Сайдбар -->
+      <aside class="sidebar">
+        <button>Напоминания</button>
+        <button class="active">Меню</button>
+        <button>Разрешенные продукты</button>
+      </aside>
+
+      <!-- Контент -->
+      <div class="content-area">
+        <div class="day-selector">
+          <button>Вчера</button>
+          <button class="active">Сегодня</button>
+          <button>Завтра</button>
+        </div>
+
+        <!-- Завтрак -->
+        <section class="meal-block">
+          <div class="meal-title">
+            <h3>Завтрак</h3>
+            <span>8:00</span>
+          </div>
+          <div class="meal-cards">
+            <div class="meal-card">
+              <button class="del-btn"><i class="fas fa-times"></i></button>
+              <div class="photo">[фото]</div>
+              <div class="desc">Омлет с зеленью<br><span>200 ккал</span></div>
+            </div>
+            <div class="meal-card">
+              <button class="del-btn"><i class="fas fa-times"></i></button>
+              <div class="photo">[фото]</div>
+              <div class="desc">Тост из цельнозернового хлеба<br><span>120 ккал</span></div>
+            </div>
+            <button class="add-btn"><i class="fas fa-plus"></i></button>
+          </div>
+        </section>
+
+        <!-- Обед -->
+        <section class="meal-block">
+          <div class="meal-title">
+            <h3>Обед</h3>
+            <span>13:00</span>
+          </div>
+          <div class="meal-cards">
+            <div class="meal-card">
+              <button class="del-btn"><i class="fas fa-times"></i></button>
+              <div class="photo">[фото]</div>
+              <div class="desc">Гречка с куриной грудкой<br><span>350 ккал</span></div>
+            </div>
+            <div class="meal-card">
+              <button class="del-btn"><i class="fas fa-times"></i></button>
+              <div class="photo">[фото]</div>
+              <div class="desc">Овощной салат<br><span>100 ккал</span></div>
+            </div>
+            <button class="add-btn"><i class="fas fa-plus"></i></button>
+          </div>
+        </section>
+
+        <!-- Ужин -->
+        <section class="meal-block">
+          <div class="meal-title">
+            <h3>Ужин</h3>
+            <span>19:00</span>
+          </div>
+          <div class="meal-cards">
+            <div class="meal-card">
+              <button class="del-btn"><i class="fas fa-times"></i></button>
+              <div class="photo">[фото]</div>
+              <div class="desc">Тушёные овощи с индейкой<br><span>300 ккал</span></div>
+            </div>
+            <button class="add-btn"><i class="fas fa-plus"></i></button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
