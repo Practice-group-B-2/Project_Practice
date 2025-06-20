@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css">
+    <link rel="stylesheet" href="reg.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="reg__cont">
+  <form class="reg__form" method="post" action="{% url 'users:registration' %}">
+    {% csrf_token %}
+    <div class="form">
+      <!-- контейнер для вывода ошибок -->
+      <div class="error">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+      <div class="logo">
+        <h1>Регистрация</h1>
+      </div>
+      <div class="form__group">
+        <input type="text" name="username" placeholder="Имя" required>
+        <i class="fa-solid fa-user"></i>
+      </div>
+      <div class="form__group">
+        <input type="email" name="email" placeholder="Почта" required>
+        <i class="fa-solid fa-envelope"></i>
+      </div>
+      <div class="form__group">
+        <input type="password" name="password1" placeholder="Пароль" required>
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <div class="form__group">
+        <input type="password" name="password2" placeholder="Повторить пароль" required>
+      </div>
+      <div class="checkboxs">
+        <div class="user__agreement">
+          <label><input type="checkbox" name="agreement">Я принимаю Пользовательское соглашение</label>
+          <span class="info__icon">i
+          <span class="tooltip">Важно! Информация, представленная в Приложении, носит исключительно рекомендательный характер и не является заменой консультации с квалифицированным медицинским специалистом. Используя Приложение, Пользователь дает свое согласие на обработку его персональных данных, предоставленных при регистрации и/или в процессе использования Приложения. <a href="https://legal-box.ru/blog/polzovatelskoe-soglashenie">Подробнее о пользовательском соглашении</a></span>
+          </span>
+        </div>
+        <br>
+        <label><input type="checkbox" name="newsletter">Я согласен получать уведомления, новости</label>
+      </div>
+      <div class="reg__btn">
+        <button type="submit" name="reg-btn">Зарегистрироваться</button>
+        <a class="link-login" href="{% url 'users:login' %}">Войти</a>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+</html>
