@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'main_page',
     'users',
     'AI',
+    'sugar_diabet',
     'dietApp',
 ]
 

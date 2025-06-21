@@ -11,36 +11,36 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-
     <style>
         body{
         background-image : url("{% static '/img/img.jpg' %}");
                         
-         background-repeat: no-repeat;
-         height:110vh;
-         background-size:200vh;
-         background-position:center;
+                        background-repeat: no-repeat;
+                        height:110vh;
+                        background-size:200vh;
+                        background-position:center;
         }
-    </style>
+        </style>
 </head>
 
 <body>
 {% block content %}
     <div class="login__cont">
-        
         <form method="POST" action="{% url 'users:login' %}" class="login__form">
             {% csrf_token %}
             <div class="form">
-                {% for message in messages %}
-                    <div class="message {{ message.tags }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
+                
                 
                 <div class="logo">
                     <h1>Вход</h1>
                 </div>
-
+                
+                    {% for message in messages %}
+                        <div class="error">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                
                 <div class="form__group">
                     {{ form.username }}
                     <i class="fa-solid fa-user"></i>

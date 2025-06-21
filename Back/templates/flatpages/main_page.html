@@ -13,23 +13,22 @@
 
   <!-- Стили -->
   <link rel="stylesheet" href="{% static 'css/styleForMain.css'%}" />
-
   <style>
-        body{
-        background-image : url("{% static '/img/mainimg.jpg' %}");
-                        
-         background-repeat: no-repeat;
-         height:110vh;
-         background-size:200vh;
-         background-position:center;
-        }
-        </style>
+    body{
+    background-image : url("{% static '/img/mainimg.png' %}");
+                    
+                    background-repeat: no-repeat;
+                    height:110vh;
+                    background-size:200vh;
+                    background-position:center;
+    }
+    </style>
 </head>
 <body>
 
      <header>
     <div class="calculateCalory-button">
-      <button class="unified-button" type="button" onclick="window.open('https://ya.ru/')">
+      <button class="unified-button" type="button" onclick="window.location.href='{% url 'calculator:calculator' %}'">
         Калькулятор калорий
       </button>
 
@@ -52,7 +51,7 @@
             </form>
         </div>
       {% else %}
-        <div class = "auth_a"id="auth">
+        <div id="auth">
             <a href="{% url 'users:login' %}">Войти</a>
             <a href="{% url 'users:registration' %}">Регистрация</a>
         </div>
@@ -71,8 +70,9 @@
           <label for="menu">Выберите карточку пользователя:</label><br>
           <select id="menu" onchange="navigate(this)">
             <option disabled selected>-- Выберите --</option>
-            <option value="cars1.html">диабетик</option>
-            <option value="card2.html">диабетик и лишний вес</option>
+            {% for value, label in sickness_choices %}
+              <option value="{{ value }}">{{ label }}</option>
+            {% endfor %}
           </select>
         </div>
       </div>
@@ -105,6 +105,8 @@
         window.location.href = value;
       }
     }
+
+    
   </script>
 
 </body>

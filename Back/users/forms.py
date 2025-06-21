@@ -6,12 +6,6 @@ from .models import UserProfile
 from .models import *
 from django.forms import ModelForm
 
-Sickness_CHOICES = (
-    ('Sugar Diabat', 'Сахарный диабет'),
-    ('Celiac disease', 'Целиакия'),
-    ('Phenylketonuria', 'Фенилкетонурия'),
-)
-
 class BaseRegisterForm(UserCreationForm):
     first_name = forms.CharField(
         label="Имя",
@@ -97,10 +91,6 @@ class BaseRegisterForm(UserCreationForm):
 
 
 class InfoAbout(forms.Form):
-
-
-
-
     height = forms.IntegerField(
         min_value=100,
         max_value=250,
@@ -123,25 +113,6 @@ class InfoAbout(forms.Form):
         required=True,
         widget=forms.Select(attrs={'class': 'form__group'})
     )
-    class Meta:
-        model = User
-        fields ={
-            "height",
-            "weight",
-            "sickness",
-
-        }
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        if commit:
-            user.save()
-            UserProfile.objects.save(
-                user=user,
-                height=self.cleaned_data.get('height'),
-                weight=self.cleaned_data.get('weight'),
-                sickness=self.cleaned_data.get('sickness')
-            )
-        return user
 
 
 

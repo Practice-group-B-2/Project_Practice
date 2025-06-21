@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   min-height: 100vh;
+  background: url('img.jpg') no-repeat;
   background-size: cover;
   background-position: center;
 }
@@ -90,7 +91,7 @@
   box-shadow: 0 0 15px #57ffab;
 }
 
-.login__btn button:hover{
+.login__btn input:hover{
   background-color: #57ffab;
   box-shadow: 0 0 15px #57ffab;
   cursor: pointer;

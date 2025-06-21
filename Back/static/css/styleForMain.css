@@ -92,7 +92,7 @@ header {
 }
 
 .calculateCalory-button button,
-.auth-buttons button,
+.auth-buttons a,
 .doctorlink-button button {
   color: white;
   border: none;
@@ -106,7 +106,7 @@ header {
 }
 
 .calculateCalory-button button:hover,
-.auth-buttons button:hover,
+.auth-buttons a:hover,
 .doctorlink-button button:hover {
   background: linear-gradient(145deg, #49cf89, #3ca972);
   transform: translateY(-1px);
@@ -202,18 +202,4 @@ footer {
   backdrop-filter: blur(4px);
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
-}
-a{
-  background: 40px linear-gradient(145deg, #4fe58c, #38b975);
-  border-radius: 10px ;
-  text-decoration: none;
-  color: white;
-
-}
-button{
-  background: 40px linear-gradient(145deg, #4fe58c, #38b975);
-  border-radius: 10px ;
-  text-decoration: none;
-  color: white;
-
 }
