@@ -102,14 +102,14 @@
 }
   
 .error{
-  position: absolute;
-  text-align: center;
-  margin-top: 10px;
-  font-family: "Philosopher", sans-serif; 
-
-  text-align: center;    
-  margin-top: -5px;       
-  color:  #9999ff;
+  background: #ffe0e0; 
+  color: #a00;
+  border: 1px solid #f99; 
+  border-radius: 6px; 
+  padding: 8px 12px; 
+  margin-bottom: 6px; 
+  text-align: center; 
+  font-size: 15px;  
 }
 
 body{

@@ -25,7 +25,15 @@
 
 <body>
 {% block content %}
-    <div class="login__cont">
+    
+        {% if messages %}
+            <div class="messages" style="max-width: 400px; margin: 0 auto 15px auto;">
+                {% for message in messages %}
+                    <div class="error {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="login__cont">
         <form method="POST" action="{% url 'users:login' %}" class="login__form">
             {% csrf_token %}
             <div class="form">
@@ -34,12 +42,6 @@
                 <div class="logo">
                     <h1>Вход</h1>
                 </div>
-                
-                    {% for message in messages %}
-                        <div class="error">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
                 
                 <div class="form__group">
                     {{ form.username }}

@@ -45,9 +45,9 @@
         <div class="Headered">
             <p>Добро пожаловать, {{ user.first_name }} {{ user.last_name }}!</p>
             <a href="{% url 'users:account' pk=user.id %}">Профиль</a>
-            <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
+            <form method="post" action="{% url 'users:logout' %}" style="display:inline-block;">
                 {% csrf_token %}
-                <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer; text-decoration: underline;">Выйти</button>
+                <button type="submit" style="display:inline-block; background: none; border: none; color: inherit; cursor: pointer;">Выйти</button>
             </form>
         </div>
       {% else %}
@@ -67,13 +67,37 @@
 
       <div class="center">
         <div class="dropdown-box">
-          <label for="menu">Выберите карточку пользователя:</label><br>
-          <select id="menu" onchange="navigate(this)">
-            <option disabled selected>-- Выберите --</option>
-            {% for value, label in sickness_choices %}
-              <option value="{{ value }}">{{ label }}</option>
-            {% endfor %}
-          </select>
+          {% if user.is_authenticated %}
+            <form method="post">
+              {% csrf_token %}
+              <label for="profile-select">Выберите профиль:</label><br>
+              <select name="profile_id" id="profile-select" onchange="this.form.submit()">
+                <option disabled {% if not selected_profile %}selected{% endif %}>-- Выберите --</option>
+                {% for profile in profiles %}
+                  <option value="{{ profile.id }}" {% if selected_profile and profile.id == selected_profile.id %}selected{% endif %}>
+                    Профиль №{{ profile.id }} (Рост: {{ profile.height }}, Вес: {{ profile.weight }}, Болезнь: {{ profile.get_sickness_display }})
+                  </option>
+                {% endfor %}
+              </select>
+            </form>
+            {% if selected_profile %}
+              <div style="margin-top: 20px;">
+                <strong>Текущий профиль:</strong><br>
+                Рост: {{ selected_profile.height }} см<br>
+                Вес: {{ selected_profile.weight }} кг<br>
+                Болезнь: {{ selected_profile.get_sickness_display }}
+              </div>
+            {% endif %}
+            {% if messages %}
+              <ul class="messages">
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          {% else %}
+            <p>Войдите, чтобы выбрать профиль.</p>
+          {% endif %}
         </div>
       </div>
 

@@ -27,7 +27,14 @@
     <body>
     {% block content %}
 
-    
+    {% if messages %}
+        <div class="messages" style="max-width: 400px; margin: 0 auto 15px auto;">
+            {% for message in messages %}
+                <div class="error {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <div class="reg__cont">
         <form method="POST" class="reg__form">
             {% csrf_token %}
@@ -35,13 +42,6 @@
                 
                 <div class="logo">
                     <h1>Регистрация</h1>
-                    <div class="messages">
-                        {% for message in messages %}
-                            <div class="message {{ message.tags }}">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    </div>
                 </div>
                 <div class="form__group">
                     {{ form.first_name }}

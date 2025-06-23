@@ -31,7 +31,7 @@ class UserProfile(models.Model):
         help_text='Введите ваш вес в килограммах',
         default=70.0  # Среднее значение веса
     )
-    user = models.OneToOneField(User, on_delete=models.CASCADE,
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='profiles',
         help_text='Имя',
     )
     sickness = models.CharField(

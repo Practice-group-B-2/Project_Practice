@@ -12,7 +12,10 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+a{
+  text-decoration: none;
 
+}
 /* Стиль для кнопочек(unified-button) */
 .unified-button {
   min-width: 180px;
