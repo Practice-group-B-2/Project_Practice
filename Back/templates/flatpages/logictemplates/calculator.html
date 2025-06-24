@@ -5,8 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Рецепты</title>
-    <link rel="stylesheet" href="calculator.css">
+    <link rel="stylesheet" href="{% static 'css/calculator.css'%}" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+    body{
+    background-image : url("{% static '/img/img.jpg' %}");
+                    
+                    background-repeat: no-repeat;
+                    height:110vh;
+                    background-size:200vh;
+                    background-position:center;
+    }
+    </style>
 </head>
 <body>
     {% comment %} <nav class="main-nav">
