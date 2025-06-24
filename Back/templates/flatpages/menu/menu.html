@@ -9,10 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" />
+  <script src="{% static 'js/Menu.js' %}"></script>
 </head>
 <body>
   <div class="menu-container">
-    <!-- Хэдер -->
     <header class="header">
       <div class="logo"></div>
       <div class="summary">
@@ -23,79 +23,161 @@
       </div>
       <button class="profile-btn" onclick="window.location.href='{% url 'users:account' pk=user.id %}'">Профиль</button>
     </header>
-
-    <!-- Главная область -->
     <div class="main-area">
-      <!-- Сайдбар -->
       <aside class="sidebar">
         <button>Напоминания</button>
         <button class="active">Меню</button>
         <button>Разрешенные продукты</button>
       </aside>
-
-      <!-- Контент -->
       <div class="content-area">
         <div class="day-selector">
           <button onclick="window.location.href='?day={{ yesterday_index }}'">Вчера</button>
           <button class="active">{{  week_days|slice:day_index|last }}</button>
           <button onclick="window.location.href='?day={{ tomorrow_index }}'">Завтра</button>
         </div>
-
-        <!-- Завтрак -->
         <section class="meal-block">
           <div class="meal-title">
             <h3>Завтрак</h3>
             <span>8:00</span>
           </div>
           <div class="meal-cards">
-            <div class="meal-card">
-              <div class="photo"> <img src="{% static 'images/' %}{{ day_menu.breakfast.image }}" alt="{{ day_menu.breakfast.name }}" style="max-width:60px;max-height:60px;"> </div>
-              <div class="desc">{{ day_menu.breakfast.name }}<br>
-                <span>{{ day_menu.breakfast.nutrition.calories }} ккал</span><br>
-                <span>Б: {{ day_menu.breakfast.nutrition.protein }} Ж: {{ day_menu.breakfast.nutrition.fat }} У: {{ day_menu.breakfast.nutrition.carbs }}</span>
+            {% for recipe in day_menu.breakfast %}
+              <div class="meal-card" data-recipe-id="{{ recipe.id }}">
+                <div class="photo"> <img src="{% static 'images/' %}{{ recipe.image }}" alt="{{ recipe.name }}" style="max-width:60px;max-height:60px;"> </div>
+                <div class="desc">{{ recipe.name }}<br>
+                  <span>{{ recipe.nutrition.calories }} ккал</span><br>
+                  <span>Б: {{ recipe.nutrition.protein }} Ж: {{ recipe.nutrition.fat }} У: {{ recipe.nutrition.carbs }}</span>
+                </div>
               </div>
-            </div>
+            {% endfor %}
             <button class="add-btn"><i class="fas fa-plus"></i></button>
           </div>
         </section>
-
-        <!-- Обед -->
         <section class="meal-block">
           <div class="meal-title">
             <h3>Обед</h3>
             <span>13:00</span>
           </div>
           <div class="meal-cards">
-            <div class="meal-card">
-              <div class="photo"> <img src="{% static 'images/' %}{{ day_menu.lunch.image }}" alt="{{ day_menu.lunch.name }}" style="max-width:60px;max-height:60px;"> </div>
-              <div class="desc">{{ day_menu.lunch.name }}<br>
-                <span>{{ day_menu.lunch.nutrition.calories }} ккал</span><br>
-                <span>Б: {{ day_menu.lunch.nutrition.protein }} Ж: {{ day_menu.lunch.nutrition.fat }} У: {{ day_menu.lunch.nutrition.carbs }}</span>
+            {% for recipe in day_menu.lunch %}
+            <div class="meal-card" data-recipe-id="{{ recipe.id }}">
+              <div class="photo"> <img src="{% static 'images/' %}{{ recipe.image }}" alt="{{ recipe.name }}" style="max-width:60px;max-height:60px;"> </div>
+              <div class="desc">{{ recipe.name }}<br>
+                <span>{{ recipe.nutrition.calories }} ккал</span><br>
+                <span>Б: {{ recipe.nutrition.protein }} Ж: {{ recipe.nutrition.fat }} У: {{ recipe.nutrition.carbs }}</span>
               </div>
             </div>
+            {% endfor %}
             <button class="add-btn"><i class="fas fa-plus"></i></button>
           </div>
         </section>
-
-        <!-- Ужин -->
         <section class="meal-block">
           <div class="meal-title">
             <h3>Ужин</h3>
             <span>19:00</span>
           </div>
           <div class="meal-cards">
-            <div class="meal-card">
-              <div class="photo"> <img src="{% static 'images/' %}{{ day_menu.dinner.image }}" alt="{{ day_menu.dinner.name }}" style="max-width:60px;max-height:60px;"> </div>
-              <div class="desc">{{ day_menu.dinner.name }}<br>
-                <span>{{ day_menu.dinner.nutrition.calories }} ккал</span><br>
-                <span>Б: {{ day_menu.dinner.nutrition.protein }} Ж: {{ day_menu.dinner.nutrition.fat }} У: {{ day_menu.dinner.nutrition.carbs }}</span>
+            {% for recipe in day_menu.dinner %}
+            <div class="meal-card" data-recipe-id="{{ recipe.id }}">
+              <div class="photo"> <img src="{% static 'images/' %}{{ recipe.image }}" alt="{{ recipe.name }}" style="max-width:60px;max-height:60px;"> </div>
+              <div class="desc">{{ recipe.name }}<br>
+                <span>{{ recipe.nutrition.calories }} ккал</span><br>
+                <span>Б: {{ recipe.nutrition.protein }} Ж: {{ recipe.nutrition.fat }} У: {{ recipe.nutrition.carbs }}</span>
               </div>
             </div>
+            {% endfor %}
             <button class="add-btn"><i class="fas fa-plus"></i></button>
           </div>
         </section>
       </div>
     </div>
   </div>
+  <div id="recipeModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Выберите рецепты</h2>
+      <form id="recipeForm">
+        <div id="recipesList"></div>
+        <button type="submit">Добавить</button>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+  let currentMeal = null;
+  let currentMealBlock = null;
+
+  document.querySelectorAll('.add-btn').forEach((btn, idx) => {
+    btn.addEventListener('click', function(e) {
+      currentMeal = ['breakfast', 'lunch', 'dinner'][idx];
+      currentMealBlock = btn.closest('.meal-cards');
+      openRecipeModal();
+    });
+  });
+
+  function openRecipeModal() {
+    fetch("{% url 'menu_url:selected_recipes_for_meal' %}?meal=" + currentMeal)
+      .then(response => response.json())
+      .then(selectedData => {
+        const selectedIds = selectedData.selected_ids.map(String);
+        fetch("{% url 'menu_url:allowed_recipes' %}")
+          .then(response => response.json())
+          .then(data => {
+            const recipesList = document.getElementById('recipesList');
+            recipesList.innerHTML = '';
+            data.recipes.forEach(recipe => {
+              const checked = selectedIds.includes(String(recipe.id));
+              recipesList.innerHTML += `
+                <label>
+                  <input type="checkbox" name="recipe" value="${recipe.id}" ${checked ? 'checked' : ''}> ${recipe.name}
+                </label><br>
+              `;
+            });
+            document.getElementById('recipeModal').style.display = 'block';
+            document.querySelectorAll('#recipesList input[type=\"checkbox\"]').forEach(cb => {
+              cb.onchange = function() {
+                updateRecipeForMeal(cb.value, cb.checked);
+              };
+            });
+          });
+      });
+  }
+
+  function updateRecipeForMeal(recipeId, checked) {
+    fetch("{% url 'menu_url:add_recipe_to_meal' %}", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': '{{ csrf_token }}'
+      },
+      body: JSON.stringify({
+        meal: currentMeal,
+        recipe_id: recipeId,
+        checked: checked
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.recipes && currentMealBlock) {
+        currentMealBlock.innerHTML = data.recipes.map(recipe => `
+          <div class="meal-card" data-recipe-id="${recipe.id}">
+            <div class="photo"> <img src="{% static 'images/' %}${recipe.image}" alt="${recipe.name}" style="max-width:60px;max-height:60px;"> </div>
+            <div class="desc">${recipe.name}<br>
+              <span>${recipe.nutrition.calories} ккал</span><br>
+              <span>Б: ${recipe.nutrition.protein} Ж: ${recipe.nutrition.fat} У: ${recipe.nutrition.carbs}</span>
+            </div>
+          </div>
+        `).join('') + '<button class="add-btn"><i class="fas fa-plus"></i></button>';
+        currentMealBlock.querySelector('.add-btn').addEventListener('click', function(e) {
+          openRecipeModal();
+        });
+      }
+    });
+  }
+
+  document.querySelector('.close').onclick = function() {
+    document.getElementById('recipeModal').style.display = 'none';
+  };
+  </script>
 </body>
 </html>

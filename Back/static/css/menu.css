@@ -10,7 +10,6 @@ body {
     min-height: 100vh;
   }
   
-  /* Хэдер */
   .header {
     display: flex;
     justify-content: space-between;
@@ -47,13 +46,11 @@ body {
     background-color: #e0e0e0;
   }
   
-  /* Главная часть */
   .main-area {
     display: flex;
     flex: 1;
   }
   
-  /* Сайдбар */
   .sidebar {
     width: 220px;
     background-color: #ffffff;
@@ -87,7 +84,6 @@ body {
     background: linear-gradient(135deg, #2ecc71, #145a32);
   }
   
-  /* Контент */
   .content-area {
     flex: 1;
     padding: 24px;
@@ -125,7 +121,6 @@ body {
     font-weight: bold;
   }
   
-  /* Блок приёма пищи */
   .meal-block {
     margin-bottom: 20px;
     background: linear-gradient(to bottom right, #a3e78b, #7ed6a7);
@@ -160,7 +155,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    position: relative; /* для кнопки удаления */
+    position: relative; 
   }
   
   .photo {
@@ -197,7 +192,7 @@ body {
     transform: scale(1.05);
   }
   
-  /* Кнопка удаления карточки */
+
   .del-btn {
     position: absolute;
     top: 8px;
@@ -222,4 +217,31 @@ body {
     background: #e74c3c;
     color: #fff;
     transform: scale(1.1);
+  }
+
+
+  .modal {
+    display: none;
+    position: fixed; 
+    z-index: 1000;   
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background: rgba(0,0,0,0.4); 
+    justify-content: center;
+    align-items: center;
+    display: flex; 
+  }
+  
+  .modal-content {
+    background: #fff;
+    margin: auto;
+    padding: 20px 30px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+    position: relative;
   }
