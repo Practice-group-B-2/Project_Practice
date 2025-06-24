@@ -1,0 +1,101 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Меню</title>
+  <link rel="stylesheet"  href="{% static 'css/menu.css'%}"  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" />
+</head>
+<body>
+  <div class="menu-container">
+    <!-- Хэдер -->
+    <header class="header">
+      <div class="logo"></div>
+      <div class="summary">
+        <span>Жиры: {{ summary.fat }}</span>
+        <span>Углеводы: {{ summary.carbs }}</span>
+        <span>Белки: {{ summary.protein }}</span>
+        <span>Калории: {{ summary.calories }}</span>
+      </div>
+      <button class="profile-btn" onclick="window.location.href='{% url 'users:account' pk=user.id %}'">Профиль</button>
+    </header>
+
+    <!-- Главная область -->
+    <div class="main-area">
+      <!-- Сайдбар -->
+      <aside class="sidebar">
+        <button>Напоминания</button>
+        <button class="active">Меню</button>
+        <button>Разрешенные продукты</button>
+      </aside>
+
+      <!-- Контент -->
+      <div class="content-area">
+        <div class="day-selector">
+          <button onclick="window.location.href='?day={{ yesterday_index }}'">Вчера</button>
+          <button class="active">{{  week_days|slice:day_index|last }}</button>
+          <button onclick="window.location.href='?day={{ tomorrow_index }}'">Завтра</button>
+        </div>
+
+        <!-- Завтрак -->
+        <section class="meal-block">
+          <div class="meal-title">
+            <h3>Завтрак</h3>
+            <span>8:00</span>
+          </div>
+          <div class="meal-cards">
+            <div class="meal-card">
+              <div class="photo"> <img src="{% static 'images/' %}{{ day_menu.breakfast.image }}" alt="{{ day_menu.breakfast.name }}" style="max-width:60px;max-height:60px;"> </div>
+              <div class="desc">{{ day_menu.breakfast.name }}<br>
+                <span>{{ day_menu.breakfast.nutrition.calories }} ккал</span><br>
+                <span>Б: {{ day_menu.breakfast.nutrition.protein }} Ж: {{ day_menu.breakfast.nutrition.fat }} У: {{ day_menu.breakfast.nutrition.carbs }}</span>
+              </div>
+            </div>
+            <button class="add-btn"><i class="fas fa-plus"></i></button>
+          </div>
+        </section>
+
+        <!-- Обед -->
+        <section class="meal-block">
+          <div class="meal-title">
+            <h3>Обед</h3>
+            <span>13:00</span>
+          </div>
+          <div class="meal-cards">
+            <div class="meal-card">
+              <div class="photo"> <img src="{% static 'images/' %}{{ day_menu.lunch.image }}" alt="{{ day_menu.lunch.name }}" style="max-width:60px;max-height:60px;"> </div>
+              <div class="desc">{{ day_menu.lunch.name }}<br>
+                <span>{{ day_menu.lunch.nutrition.calories }} ккал</span><br>
+                <span>Б: {{ day_menu.lunch.nutrition.protein }} Ж: {{ day_menu.lunch.nutrition.fat }} У: {{ day_menu.lunch.nutrition.carbs }}</span>
+              </div>
+            </div>
+            <button class="add-btn"><i class="fas fa-plus"></i></button>
+          </div>
+        </section>
+
+        <!-- Ужин -->
+        <section class="meal-block">
+          <div class="meal-title">
+            <h3>Ужин</h3>
+            <span>19:00</span>
+          </div>
+          <div class="meal-cards">
+            <div class="meal-card">
+              <div class="photo"> <img src="{% static 'images/' %}{{ day_menu.dinner.image }}" alt="{{ day_menu.dinner.name }}" style="max-width:60px;max-height:60px;"> </div>
+              <div class="desc">{{ day_menu.dinner.name }}<br>
+                <span>{{ day_menu.dinner.nutrition.calories }} ккал</span><br>
+                <span>Б: {{ day_menu.dinner.nutrition.protein }} Ж: {{ day_menu.dinner.nutrition.fat }} У: {{ day_menu.dinner.nutrition.carbs }}</span>
+              </div>
+            </div>
+            <button class="add-btn"><i class="fas fa-plus"></i></button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
