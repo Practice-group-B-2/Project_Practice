@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рецепты</title>
+    <link rel="stylesheet" href="calculator.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    {% comment %} <nav class="main-nav">
+        <div class="nav-center">
+            <a href="/" class="nav-button">
+                <i class="fas fa-home"></i> Главная
+            </a>
+
+        </div>
+    </nav>  {% endcomment %}
+
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content">
+            <h2>Добро пожаловать!</h2>
+            <div class="input-group">
+                <label for="ageSlider">Ваш возраст:</label>
+                <div class="slider-container">
+                    <input type="range" id="ageSlider" min="1" max="100" value="30" class="slider">
+                    <span id="ageValue">30</span>
+                </div>
+            </div>
+            <label for="weightInput">Ваш вес (кг):</label>
+            <input type="number" id="weightInput" min="30" max="200" value="{{ profile_data.weight|default:70 }}">
+
+            <label for="diseaseSelect">Ваша болезнь:</label>
+            <select id="diseaseSelect">
+                <option value="none" {% if profile_data and profile_data.sickness == 'none' %}selected{% endif %}>Нет заболеваний</option>
+                <option value="diabetes" {% if profile_data and profile_data.sickness == 'diabetes' %}selected{% endif %}>Сахарный диабет</option>
+                <option value="celiac" {% if profile_data and profile_data.sickness == 'celiac' %}selected{% endif %}>Целиакия</option>
+                <option value="phenylketonuria" {% if profile_data and profile_data.sickness == 'phenylketonuria' %}selected{% endif %}>Фенилкетонурия</option>
+                <option value="lactose" {% if profile_data and profile_data.sickness == 'lactose' %}selected{% endif %}>Непереносимость лактозы</option>
+            </select>
+
+            <button onclick="closeWelcomeModal()">Продолжить</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay"></div>
+
+    <div class="container">
+        <h1><i class="fas fa-utensils"></i> Рецепты</h1>
+
+        <div class="search-filter">
+            <input type="text" id="searchInput" placeholder="Поиск рецептов...">
+            <select id="filterDropdown">
+                <option value="all">Все категории</option>
+                <option value="Суп">Суп</option>
+                <option value="Салат">Салат</option>
+                <option value="Рыба">Рыба</option>
+                <option value="Жаркое">Жаркое</option>
+                <option value="Рагу">Рагу</option>
+            </select>
+        </div>
+
+        <div class="trade-list">
+            {% for item in trade_items %}
+            <div class="trade-item" data-category="{{ item.category }}" data-diabetic="{{ item.diabetic|yesno:'true,false' }}" data-low-calorie="{{ item.low_calorie|yesno:'true,false' }}" data-low-salt="{{ item.low_salt|yesno:'true,false' }}">
+                <span class="nutrition-badge">{{ item.nutrition.calories }} ккал</span>
+                <img src="{% static 'images/' %}{{ item.image }}" alt="{{ item.name }}" class="item-image">
+                <h3 class="item-name">{{ item.name }}</h3>
+                <p class="item-description">{{ item.description }}</p>
+                <div class="health-indicator">
+                    {% if item.diabetic %}
+                    <span class="health-icon" title="Для диабетиков">🩸</span>
+                    {% endif %}
+                    {% if item.low_calorie %}
+                    <span class="health-icon" title="Низкокалорийное">⚖️</span>
+                    {% endif %}
+                    {% if item.low_salt %}
+                    <span class="health-icon" title="Низкое содержание соли">🧂</span>
+                    {% endif %}
+                </div>
+                <button class="calculator-btn" onclick="showCalculator('{{ item.name }}')">
+                    <i class="fas fa-calculator"></i> Калькулятор
+                </button>
+                <button onclick="showRecipeModal('{{ item.video_url }}', '{{ item.name }}', '{{ item.description }}')">Показать рецепт</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="recipe-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRecipeModal()">&times;</span>
+            <h2 id="modal-recipe-title"></h2>
+            <p id="modal-recipe-description"></p>
+            <iframe id="modal-recipe-video" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div id="calculatorModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCalculatorModal()">&times;</span>
+            <h2>Калькулятор пищевой ценности</h2>
+            <div class="input-group">
+                <label for="portionWeight">Вес порции (г):</label>
+                <input type="number" id="portionWeight" min="50" max="1000" value="100">
+            </div>
+            <div class="input-group">
+                <label for="calculatorDiseaseSelect">Ваша болезнь:</label>
+                <select id="calculatorDiseaseSelect">
+                    <option value="none">Нет заболеваний</option>
+                    <option value="diabetes">Сахарный диабет</option>
+                    <option value="celiac">Целиакия</option>
+                    <option value="phenylketonuria">Фенилкетонурия</option>
+                    <option value="lactose">Непереносимость лактозы</option>
+                </select>
+            </div>
+            <div id="nutritionResults" style="display: none;">
+                <h3>Пищевая ценность:</h3>
+                <p>Калории: <span id="calories">0</span> ккал</p>
+                <p>Белки: <span id="protein">0</span> г</p>
+                <p>Углеводы: <span id="carbs">0</span> г</p>
+                <p>Жиры: <span id="fat">0</span> г</p>
+                <div id="diseaseRecommendations" style="margin-top: 15px; padding: 10px; background-color: #f0f8ff; border-radius: 5px;">
+                    <h4>Рекомендации:</h4>
+                    <p id="recommendationText"></p>
+                </div>
+            </div>
+            <button onclick="calculateNutrition()">Рассчитать</button>
+        </div>
+    </div>
+
+    <script src="{% static 'js/calculatorScripts.js' %}"></script>
+    <script>
+        const CALCULATE_URL = "{% url 'calculator:calculate_nutrition' %}";
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Автозаполнение болезни и веса из профиля пользователя для калькулятора
+        {% if profile_data %}
+        document.addEventListener('DOMContentLoaded', function() {
+            // Для модального окна приветствия
+            document.getElementById('weightInput').value = {{ profile_data.weight }};
+            document.getElementById('diseaseSelect').value = "{{ profile_data.sickness }}";
+            // Для калькулятора
+            if (document.getElementById('calculatorDiseaseSelect')) {
+                document.getElementById('calculatorDiseaseSelect').value = "{{ profile_data.sickness }}";
+            }
+        });
+        {% endif %}
+    </script>
+</body>
+</html>

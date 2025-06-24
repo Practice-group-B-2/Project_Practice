@@ -1,161 +1,121 @@
-/* C:\Users\oxot5\OneDrive\Рабочий стол\Project_Practice-Back\Back\static\login.css */
-
-.login__cont {
+.login__cont{
   display: flex;
   justify-content: center;
   min-height: 100vh;
-  background: url('img.jpg') no-repeat center center fixed; /* Фон будет в той же папке static */
+  background: url('img.jpg') no-repeat;
   background-size: cover;
+  background-position: center;
 }
-
-.login__form {
+  
+.login__form{
   width: 80%;
-  max-width: 500px;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
-  margin: 50px 0;
+  align-items: center; 
 }
-
-.form {
-  width: 100%;
-  padding: 30px;
+  
+.form{
+  width: 50%;
+  height: 55%;
   display: flex;
+  justify-content: center; 
   flex-direction: column;
-  align-items: center;
+  align-items: center; 
   font-family: "Philosopher", sans-serif;
-  border-radius: 15px;
-  background: rgba(255, 255, 255, 0.1);
+  font-size: 20px;
+  border-radius: 7px;
+  padding: 10px 10px;
+  border: 2px solid rgb(255, 255, 255 .2);
   backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
-
-.logo {
-  font-family: "Philosopher", sans-serif;
-  font-size: 32px;
-  font-weight: bold;
-  color: white;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
+  
 .form__group {
   display: flex;
-  margin-bottom: 20px;
-  width: 100%;
-  position: relative;
+  margin-bottom: 10px;
+  width: 80%;
 }
-
+  
 .form__group input {
   width: 100%;
-  padding: 15px 20px 15px 50px;
-  font-size: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 30px;
+  padding: 8px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
   font-family: "Philosopher", sans-serif;
-  background: rgba(0, 0, 0, 0.3);
+  border-radius: 18px;
+  background: transparent;
   color: white;
-  transition: all 0.3s ease;
 }
 
-.form__group i {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 24px;
-  color: rgba(255, 255, 255, 0.7);
+.form__group i{
+  font-size: 26px;
+  color: white;
+  margin-left: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  
+.logo{
+  font-family: "Philosopher", sans-serif; 
+  font-size: 25px;
+  font-weight: bold; 
+  color: white;
+  transition: all 0.7s ease-in-out; 
+}
+  
+.login__btn input{
+  border: none;
+  border-radius: 7px;
+  background: #19d12b;
+  background: radial-gradient(circle, rgba(25, 209, 43, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(39, 186, 161, 1) 100%);
+  color: white;
+  padding: 16px 30px;
+  text-align: center;
+  font-size: 26px;
+  font-family: "Philosopher", sans-serif; 
+  transition: all 0.4s ease-in-out;
 }
 
+.login__btn a{
+  text-decoration: none;
+  color: white;
+  font-size: 25px;
+}
+
+  
 .form__group input:focus {
   outline: none;
-  border-color: #57ffab;
-  box-shadow: 0 0 15px rgba(87, 255, 171, 0.5);
+  box-shadow: 0 0 15px #57ffab;
 }
 
-.login__btn {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.login__btn button {
-  border: none;
-  border-radius: 30px;
-  background: linear-gradient(135deg, #19d12b, #39baa1);
-  color: white;
-  padding: 16px;
-  font-size: 22px;
-  font-family: "Philosopher", sans-serif;
-  transition: all 0.3s ease;
-  width: 100%;
+.login__btn input:hover{
+  background-color: #57ffab;
+  box-shadow: 0 0 15px #57ffab;
   cursor: pointer;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
-  font-weight: bold;
+}
+  
+.logo:hover{
+  text-shadow: 0 0 10px #57ffab;
+}
+  
+.error{
+  background: #ffe0e0; 
+  color: #a00;
+  border: 1px solid #f99; 
+  border-radius: 6px; 
+  padding: 8px 12px; 
+  margin-bottom: 6px; 
+  text-align: center; 
+  font-size: 15px;   
 }
 
-.login__btn button:hover {
-  background: linear-gradient(135deg, #1de231, #45d8c1);
-  box-shadow: 0 0 20px rgba(87, 255, 171, 0.7);
-  transform: translateY(-3px);
-}
-
-.link-login {
-  text-decoration: none;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 18px;
-  transition: all 0.3s ease;
-}
-
-.link-login:hover {
-  color: #57ffab;
-  text-shadow: 0 0 10px rgba(87, 255, 171, 0.7);
-}
-
-.error {
-  width: 100%;
-  text-align: center;
-  font-family: "Philosopher", sans-serif;
-  color: #ff6b6b;
-  margin: 15px 0;
-  padding: 12px;
-  background: rgba(255, 0, 0, 0.1);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 0, 0, 0.2);
-  font-size: 16px;
-}
-
-/* Адаптивность для мобильных устройств */
-@media (max-width: 768px) {
-  .login__form {
-    width: 90%;
-  }
-
-  .form {
-    padding: 20px;
-  }
-
-  .form__group input {
-    padding: 12px 15px 12px 45px;
-    font-size: 16px;
-  }
-
-  .form__group i {
-    font-size: 20px;
-    left: 15px;
-  }
-
-  .login__btn button {
-    font-size: 20px;
-    padding: 14px;
-  }
-
-  .logo {
-    font-size: 28px;
-  }
+body{
+  margin: 0;
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
 }

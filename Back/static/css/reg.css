@@ -1,0 +1,121 @@
+.reg__cont{
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  background: url("{% static 'css/img/img.jpg'") no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+  
+.reg__form{
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center; 
+}
+  
+.form{
+  width: 50%;
+  height: 70%;
+  display: flex;
+  justify-content: center; 
+  flex-direction: column;
+  align-items: center; 
+  font-family: "Philosopher", sans-serif;
+  font-size: 20px;
+  border-radius: 7px;
+  padding: 10px 10px;
+  border: 2px solid rgb(255, 255, 255 .2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+  
+.form__group {
+  display: flex;
+  margin-bottom: 10px;
+  width: 80%;
+}
+  
+.form__group input {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-family: "Philosopher", sans-serif;
+  border-radius: 18px;
+  background: transparent;
+  color: white;
+}
+
+.form__group i{
+  font-size: 26px;
+  color: white;
+  margin-left: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  
+.logo{
+  font-family: "Philosopher", sans-serif; 
+  font-size: 25px;
+  font-weight: bold; 
+  color: white;
+  transition: all 0.7s ease-in-out; 
+}
+  
+.reg__btn input {
+  border: none;
+  border-radius: 7px;
+  background: #19d12b;
+  background: radial-gradient(circle, rgba(25, 209, 43, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(39, 186, 161, 1) 100%);
+  color: white;
+  padding: 16px 30px;
+  text-align: center;
+  font-size: 26px;
+  font-family: "Philosopher", sans-serif; 
+  transition: all 0.4s ease-in-out;
+}
+
+.reg__btn a{
+  text-decoration: none;
+  color: black;
+  font-size: 25px;
+}
+
+  
+.form__group input:focus {
+  outline: none;
+  box-shadow: 0 0 15px #57ffab;
+}
+  
+.reg__btn button:hover{
+  background-color: #57ffab;
+  box-shadow: 0 0 15px #57ffab;
+  cursor: pointer;
+}
+  
+.logo:hover{
+  text-shadow: 0 0 10px #57ffab;
+}
+  
+.error{
+  background: #ffe0e0; 
+  color: #a00;
+  border: 1px solid #f99; 
+  border-radius: 6px; 
+  padding: 8px 12px; 
+  margin-bottom: 6px; 
+  text-align: center; 
+  font-size: 15px;  
+}
+
+body{
+  margin: 0;
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}

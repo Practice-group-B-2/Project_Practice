@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% load static %}
+
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -9,35 +11,55 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        body{
+        background-image : url("{% static '/img/img.jpg' %}");
+                        
+                        background-repeat: no-repeat;
+                        height:110vh;
+                        background-size:200vh;
+                        background-position:center;
+        }
+        </style>
 </head>
+
 <body>
-<div class="login__cont">
-  <form class="login__form" method="post" action="{% url 'users:login' %}">
-    {% csrf_token %}
-    <div class="form">
-      <div class="logo">
-        <h1>Вход</h1>
-      </div>
-      <div class="form__group">
-        <input type="text" name="username" placeholder="Имя" required>
-        <i class="fa-solid fa-user"></i>
-      </div>
-      <div class="form__group">
-        <input type="password" name="password" placeholder="Пароль" required>
-        <i class="fa-solid fa-lock"></i>
-      </div>
-      <div class="login__btn">
-        <button type="submit" name="login-btn">Войти</button>
-        <a class="link-login" href="{% url 'users:registration' %}">Регистрация</a>
-        <!-- контейнер для вывода ошибок -->
-        <div class="error">
-          {% for message in messages %}
-            <p>{{ message }}</p>
-          {% endfor %}
-        </div>
-      </div>
+{% block content %}
+    
+        {% if messages %}
+            <div class="messages" style="max-width: 400px; margin: 0 auto 15px auto;">
+                {% for message in messages %}
+                    <div class="error {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="login__cont">
+        <form method="POST" action="{% url 'users:login' %}" class="login__form">
+            {% csrf_token %}
+            <div class="form">
+                
+                
+                <div class="logo">
+                    <h1>Вход</h1>
+                </div>
+                
+                <div class="form__group">
+                    {{ form.username }}
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div class="form__group">
+                    {{ form.password }}
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+
+                <div class="login__btn">
+                    <input type="submit" value="Войти">
+                    <a class="link-login" href="{% url 'users:registration'%}">Регистрация</a>
+                </div>
+            </div>
+        </form>
     </div>
-  </form>
-</div>
+{% endblock %}
 </body>
 </html>
