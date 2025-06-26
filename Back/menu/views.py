@@ -1,36 +1,36 @@
 from django.shortcuts import render
 import random
 from django.utils import timezone
-from users.models import UserProfile
+from users.models import UserCard
 from sugar_diabet.views import recipes
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET, require_POST
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-def get_profile_for_menu(request):
-    profile = None
+def get_card_for_menu(request):
+    card = None
     if request.user.is_authenticated:
-        selected_profile_id = request.session.get('selected_profile_id')
-        if selected_profile_id:
+        selected_card_id = request.session.get('selected_card_id')
+        if selected_card_id:
             try:
-                profile = UserProfile.objects.get(id=selected_profile_id, user=request.user)
-            except UserProfile.DoesNotExist:
+                card = UserCard.objects.get(id=selected_card_id, user=request.user)
+            except UserCard.DoesNotExist:
                 pass
-    return profile
+    return card
 
-def filter_recipes_by_health(profile):
+def filter_recipes_by_health(card):
     filtered = []
-    if not profile:
+    if not card:
         return recipes
     for r in recipes:
-        if profile.sickness == 'diabetes' and not r.get('diabetic', False):
+        if card.sickness == 'diabetes' and not r.get('diabetic', False):
             continue
         filtered.append(r)
     return filtered
 
-def generate_menu_for_week(profile):
-    filtered_recipes = filter_recipes_by_health(profile)
+def generate_menu_for_week(card):
+    filtered_recipes = filter_recipes_by_health(card)
     menu = []
     meal_types = ['breakfast', 'lunch', 'dinner']
     for day in range(7):
@@ -51,18 +51,18 @@ def menu_view(request):
             day_index = today.weekday()
     else:
         day_index = today.weekday()
-    profile = get_profile_for_menu(request)
+    card = get_card_for_menu(request)
     if 'weekly_menu' not in request.session:
         request.session['weekly_menu'] = None
     if not request.session['weekly_menu']:
-        weekly_menu = generate_menu_for_week(profile)
+        weekly_menu = generate_menu_for_week(card)
         request.session['weekly_menu'] = weekly_menu
     else:
         weekly_menu = request.session['weekly_menu']
-    if profile and request.session.get('menu_profile_id') != (profile.id if profile else None):
-        weekly_menu = generate_menu_for_week(profile)
+    if card and request.session.get('menu_card_id') != (card.id if card else None):
+        weekly_menu = generate_menu_for_week(card)
         request.session['weekly_menu'] = weekly_menu
-        request.session['menu_profile_id'] = profile.id if profile else None
+        request.session['menu_card_id'] = card.id if card else None
     day_menu = weekly_menu[day_index]
     summary = {'calories': 0, 'protein': 0, 'carbs': 0, 'fat': 0}
     for meal in day_menu.values():
@@ -92,8 +92,8 @@ def menu_view(request):
 
 @require_GET
 def allowed_recipes(request):
-    profile = get_profile_for_menu(request)
-    allowed = filter_recipes_by_health(profile)
+    card = get_card_for_menu(request)
+    allowed = filter_recipes_by_health(card)
     return JsonResponse({'recipes': [
         {'id': i, 'name': r['name']} for i, r in enumerate(allowed)
     ]})
@@ -103,14 +103,14 @@ def allowed_recipes(request):
 def add_recipe_to_meal(request):
     data = json.loads(request.body)
     meal = data.get('meal')  
-    recipe_id = data.get('recipe_id') 
-    checked = data.get('checked') 
-    profile = get_profile_for_menu(request)
-    allowed = filter_recipes_by_health(profile)
+    recipe_id = data.get('recipe_id')
+    checked = data.get('checked')
+    card = get_card_for_menu(request)
+    allowed = filter_recipes_by_health(card)
     weekly_menu = request.session.get('weekly_menu')
     day_index = timezone.localdate().weekday()
     if not weekly_menu:
-        weekly_menu = generate_menu_for_week(profile)
+        weekly_menu = generate_menu_for_week(card)
     current = weekly_menu[day_index][meal]
     if not isinstance(current, list):
         current = [current]
@@ -134,8 +134,8 @@ def selected_recipes_for_meal(request):
     if weekly_menu and meal in weekly_menu[day_index]:
         selected = weekly_menu[day_index][meal]
         if isinstance(selected, list):
-            profile = get_profile_for_menu(request)
-            allowed = filter_recipes_by_health(profile)
+            card = get_card_for_menu(request)
+            allowed = filter_recipes_by_health(card)
             selected_ids = [
                 str(allowed.index(r)) for r in selected if r in allowed
             ]

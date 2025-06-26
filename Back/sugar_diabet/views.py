@@ -2,7 +2,7 @@ from django.shortcuts import render
 import random
 from django.shortcuts import render
 from django.http import JsonResponse
-from users.models import UserProfile
+from users.models import UserCard
 
 recipes = [
     {
@@ -153,22 +153,23 @@ recipes = [
 
 def calculator123(request):
     random.shuffle(recipes)
-    profile_data = None
+    card_data = None
     if request.user.is_authenticated:
-        selected_profile_id = request.session.get('selected_profile_id')
-        if selected_profile_id:
+        selected_card_id = request.session.get('selected_card_id')
+        if selected_card_id:
             try:
-                profile = UserProfile.objects.get(id=selected_profile_id, user=request.user)
-                profile_data = {
-                    'height': profile.height,
-                    'weight': float(profile.weight),
-                    'sickness': profile.sickness,
+                card = UserCard.objects.get(id=selected_card_id, user=request.user)
+                card_data = {
+                    'name': card.name,
+                    'height': card.height,
+                    'weight': float(card.weight),
+                    'sickness': card.sickness,
                 }
-            except UserProfile.DoesNotExist:
+            except UserCard.DoesNotExist:
                 pass
     return render(request, 'flatpages/logictemplates/calculator.html', {
         'trade_items': recipes,
-        'profile_data': profile_data,
+        'card_data': card_data,
     })
 
 

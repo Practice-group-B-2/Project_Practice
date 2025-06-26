@@ -16,7 +16,6 @@ a{
   text-decoration: none;
 
 }
-/* Стиль для кнопочек(unified-button) */
 .unified-button {
   min-width: 180px;
   height: 50px;
@@ -42,7 +41,6 @@ a{
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Хэдер */
 header {
   display: flex;
   justify-content: space-between;
@@ -56,7 +54,6 @@ header {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Кнопки в навигации хэдера и футера */
 .headerNav-buttons,
 .footerNav-buttons {
   display: flex;
@@ -83,12 +80,10 @@ header {
   transform: translateY(-1px);
 }
 
-/* Кнопки в футере */
 .footerNav-buttons {
   margin-right: auto;
 }
 
-/* Кнопки авторизации и калькулятора */
 .auth-buttons {
   display: flex;
   flex-direction: column;
@@ -115,7 +110,6 @@ header {
   transform: translateY(-1px);
 }
 
-/* контент */
 main {
   flex: 1;
   display: flex;
@@ -124,7 +118,6 @@ main {
   padding-bottom: 60px;
 }
 
-/* Основной контейнер */
 .container {
   display: flex;
   max-width: 1200px;
@@ -133,7 +126,6 @@ main {
   gap: 20px;
 }
 
-/* Левая и правая реклама */
 .ad-left, .ad-right {
   flex: 0 0 200px;
   background-color: #e0e0e0;
@@ -143,15 +135,12 @@ main {
   text-align: center;
 }
 
-/* Центральный блок */
 .center {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: flex-start;
 }
-
-/* Выпадающий список */
 .dropdown-box {
   backdrop-filter: blur(5px);
   padding: 30px;
@@ -190,8 +179,6 @@ main {
   padding: 10px;
 }
 
-
-/* Футтер */
 footer {
   width: 100%;
   position: fixed;

@@ -1,9 +1,20 @@
-
 {% load static %}
 
 {% block title %}Профиль пользователя{% endblock %}
 
 {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Профиль</title>
+	<link rel="stylesheet" href="{% static 'css/profile.css'%}">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -45,4 +56,301 @@
         </div>
     </div>
 </div>
+
+<div class="btn__container">
+  <div class="btn__wrapper">
+    <button>Логин почта пароль</button>
+
+    <!-- Кнопка с выпадающим меню -->
+    <button id="userTypeBtn">
+      Сменить тип пользователя <i class="fa-solid fa-caret-down"></i>
+
+      <!-- Выпадающее меню -->
+      <div id="userTypeMenu" class="dropdown__menu">
+        <div data-value="admin">Администратор</div>
+        <div data-value="user">Пользователь</div>
+      </div>
+    </button>
+    <button id="createCardBtn" class="btn btn-success">Создать новую карточку пользователя</button>
+  </div>
+</div>
+
+<div class="curren__role">
+	<p id="currentValue">Текущий тип пользователя: Не выбран</p>
+</div>
+
+<!-- Форма создания карточки (скрыта по умолчанию) -->
+<div id="createCardForm" class="card-form" style="display: none;">
+    <div class="card">
+        <div class="card-header">
+            <h3>Создать новую карточку пользователя</h3>
+        </div>
+        <div class="card-body">
+            <form id="newCardForm">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <label for="card_name">Имя</label>
+                    <input type="text" id="card_name" name="name" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="card_height">Рост (см)</label>
+                    <input type="number" id="card_height" name="height" class="form-control" min="100" max="250" value="170" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="card_weight">Вес (кг)</label>
+                    <input type="number" id="card_weight" name="weight" class="form-control" min="30" max="300" step="0.1" value="70.0" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="card_sickness">Заболевание</label>
+                    <select id="card_sickness" name="sickness" class="form-control" required>
+                        <option value="none">Нет заболеваний</option>
+                        <option value="diabetes">Сахарный диабет</option>
+                        <option value="celiac">Целиакия</option>
+                        <option value="phenylketonuria">Фенилкетонурия</option>
+                        <option value="lactose">Непереносимость лактозы</option>
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Создать карточку</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideCreateForm()">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Форма редактирования карточки (скрыта по умолчанию) -->
+<div id="editCardForm" class="card-form" style="display: none;">
+    <div class="card">
+        <div class="card-header">
+            <h3>Редактировать карточку пользователя</h3>
+        </div>
+        <div class="card-body">
+            <form id="editCardFormInner">
+                {% csrf_token %}
+                <input type="hidden" id="edit_card_id" name="card_id">
+                <div class="form-group mb-3">
+                    <label for="edit_card_name">Имя</label>
+                    <input type="text" id="edit_card_name" name="name" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="edit_card_height">Рост (см)</label>
+                    <input type="number" id="edit_card_height" name="height" class="form-control" min="100" max="250" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="edit_card_weight">Вес (кг)</label>
+                    <input type="number" id="edit_card_weight" name="weight" class="form-control" min="30" max="300" step="0.1" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="edit_card_sickness">Заболевание</label>
+                    <select id="edit_card_sickness" name="sickness" class="form-control" required>
+                        <option value="none">Нет заболеваний</option>
+                        <option value="diabetes">Сахарный диабет</option>
+                        <option value="celiac">Целиакия</option>
+                        <option value="phenylketonuria">Фенилкетонурия</option>
+                        <option value="lactose">Непереносимость лактозы</option>
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideEditForm()">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="cards-container" id="cardsContainer">
+  {% for card in user_cards %}
+  <div class="card" data-card-id="{{ card.id }}">
+    <div class="card-content">
+      ИМЯ: {{ card.name }}<br />
+      РОСТ: {{ card.height }}<br />
+      ВЕС: {{ card.weight }}<br />
+      {% if card.sickness == 'diabetes' %}
+        Диабет
+      {% elif card.sickness == 'celiac' %}
+        Целиакия
+      {% elif card.sickness == 'phenylketonuria' %}
+        Фенилкетонурия
+      {% elif card.sickness == 'lactose' %}
+        Непереносимость лактозы
+      {% else %}
+        Нет заболеваний
+      {% endif %}
+    </div>
+    <div class="card-actions">
+      <button class="edit-btn" onclick="showEditForm({{ card.id }}, '{{ card.name }}', {{ card.height }}, {{ card.weight }}, '{{ card.sickness }}')">Редактировать</button>
+      <button class="delete-btn" onclick="deleteCard({{ card.id }})">Удалить</button>
+    </div>
+  </div>
+  {% empty %}
+  <div class="no-cards">
+    <p>У вас пока нет карточек пользователей. <button onclick="showCreateForm()" class="btn btn-link">Создать первую карточку</button></p>
+  </div>
+  {% endfor %}
+</div>
+
+<script>
+// Показать форму создания
+function showCreateForm() {
+    document.getElementById('createCardForm').style.display = 'block';
+    document.getElementById('editCardForm').style.display = 'none';
+}
+
+// Скрыть форму создания
+function hideCreateForm() {
+    document.getElementById('createCardForm').style.display = 'none';
+}
+
+// Показать форму редактирования
+function showEditForm(cardId, name, height, weight, sickness) {
+    document.getElementById('edit_card_id').value = cardId;
+    document.getElementById('edit_card_name').value = name;
+    document.getElementById('edit_card_height').value = height;
+    document.getElementById('edit_card_weight').value = weight;
+    document.getElementById('edit_card_sickness').value = sickness;
+    
+    document.getElementById('editCardForm').style.display = 'block';
+    document.getElementById('createCardForm').style.display = 'none';
+}
+
+// Скрыть форму редактирования
+function hideEditForm() {
+    document.getElementById('editCardForm').style.display = 'none';
+}
+
+// Создание карточки
+document.getElementById('newCardForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+    
+    fetch("{% url 'users:create_user_card_ajax' %}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            hideCreateForm();
+            addCardToContainer(result.card);
+            this.reset();
+            alert(result.message);
+        } else {
+            alert('Ошибка: ' + JSON.stringify(result.errors));
+        }
+    });
+});
+
+// Редактирование карточки
+document.getElementById('editCardFormInner').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+    const cardId = data.card_id;
+    delete data.card_id;
+    
+    fetch(`{% url 'users:edit_user_card_ajax' 0 %}`.replace('0', cardId), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            hideEditForm();
+            updateCardInContainer(result.card);
+            alert(result.message);
+        } else {
+            alert('Ошибка: ' + JSON.stringify(result.errors));
+        }
+    });
+});
+
+// Удаление карточки
+function deleteCard(cardId) {
+    if (confirm('Вы уверены, что хотите удалить эту карточку?')) {
+        fetch(`{% url 'users:delete_user_card_ajax' 0 %}`.replace('0', cardId), {
+            method: 'GET',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                document.querySelector(`[data-card-id="${cardId}"]`).remove();
+                alert(result.message);
+            } else {
+                alert('Ошибка: ' + result.message);
+            }
+        });
+    }
+}
+
+// Добавить карточку в контейнер
+function addCardToContainer(card) {
+    const container = document.getElementById('cardsContainer');
+    const noCards = container.querySelector('.no-cards');
+    if (noCards) {
+        noCards.remove();
+    }
+    
+    const cardHtml = `
+        <div class="card" data-card-id="${card.id}">
+            <div class="card-content">
+                ИМЯ: ${card.name}<br />
+                РОСТ: ${card.height}<br />
+                ВЕС: ${card.weight}<br />
+                ${getSicknessDisplay(card.sickness)}
+            </div>
+            <div class="card-actions">
+                <button class="edit-btn" onclick="showEditForm(${card.id}, '${card.name}', ${card.height}, ${card.weight}, '${card.sickness}')">Редактировать</button>
+                <button class="delete-btn" onclick="deleteCard(${card.id})">Удалить</button>
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', cardHtml);
+}
+
+// Обновить карточку в контейнере
+function updateCardInContainer(card) {
+    const cardElement = document.querySelector(`[data-card-id="${card.id}"]`);
+    if (cardElement) {
+        cardElement.querySelector('.card-content').innerHTML = `
+            ИМЯ: ${card.name}<br />
+            РОСТ: ${card.height}<br />
+            ВЕС: ${card.weight}<br />
+            ${getSicknessDisplay(card.sickness)}
+        `;
+    }
+}
+
+// Получить отображение заболевания
+function getSicknessDisplay(sickness) {
+    const sicknessMap = {
+        'diabetes': 'Диабет',
+        'celiac': 'Целиакия',
+        'phenylketonuria': 'Фенилкетонурия',
+        'lactose': 'Непереносимость лактозы',
+        'none': 'Нет заболеваний'
+    };
+    return sicknessMap[sickness] || 'Нет заболеваний';
+}
+
+// Показать форму создания при нажатии на кнопку
+document.getElementById('createCardBtn').addEventListener('click', showCreateForm);
+</script>
+
+<script src="{%static 'js/profile.js'%}"></script>
+</body>
+</html>
 {% endblock %} 

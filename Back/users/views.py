@@ -3,12 +3,14 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.db.transaction import commit
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from .forms import BaseRegisterForm, LoginForm, InfoAbout
+from .forms import BaseRegisterForm, LoginForm, InfoAbout, UserCardForm
 from django.contrib.auth.models import User
-from .models import UserProfile
+from .models import UserProfile, UserCard
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 
 def user_login(request):
@@ -38,6 +40,9 @@ def account(request, pk):
     except UserProfile.DoesNotExist:
         profile = UserProfile.objects.create(user=user)
     
+    # Получаем карточки пользователя
+    user_cards = UserCard.objects.filter(user=user).order_by('-created_at')
+    
     if request.method == 'POST':
         infoForm = InfoAbout(request.POST)
         if infoForm.is_valid():
@@ -57,12 +62,86 @@ def account(request, pk):
     return render(request, 'flatpages/users/account.html', {
         'form': infoForm,
         'profile': profile,
-        'user': user
+        'user': user,
+        'user_cards': user_cards
     })
 
+@csrf_exempt
+@login_required
+def create_user_card_ajax(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        form = UserCardForm(data)
+        if form.is_valid():
+            card = form.save(commit=False)
+            card.user = request.user
+            card.save()
+            return JsonResponse({
+                'success': True,
+                'message': 'Карточка успешно создана!',
+                'card': {
+                    'id': card.id,
+                    'name': card.name,
+                    'height': card.height,
+                    'weight': str(card.weight),
+                    'sickness': card.sickness,
+                    'sickness_display': card.get_sickness_display()
+                }
+            })
+        else:
+            return JsonResponse({
+                'success': False,
+                'errors': form.errors
+            })
+    return JsonResponse({'success': False, 'message': 'Неверный метод запроса'})
 
+@csrf_exempt
+@login_required
+def edit_user_card_ajax(request, card_id):
+    try:
+        card = UserCard.objects.get(id=card_id, user=request.user)
+    except UserCard.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Карточка не найдена'})
+    
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        form = UserCardForm(data, instance=card)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({
+                'success': True,
+                'message': 'Карточка успешно обновлена!',
+                'card': {
+                    'id': card.id,
+                    'name': card.name,
+                    'height': card.height,
+                    'weight': str(card.weight),
+                    'sickness': card.sickness,
+                    'sickness_display': card.get_sickness_display()
+                }
+            })
+        else:
+            return JsonResponse({
+                'success': False,
+                'errors': form.errors
+            })
+    return JsonResponse({'success': False, 'message': 'Неверный метод запроса'})
 
-# Create your views here.
+@login_required
+def delete_user_card_ajax(request, card_id):
+    try:
+        card = UserCard.objects.get(id=card_id, user=request.user)
+        card.delete()
+        return JsonResponse({
+            'success': True,
+            'message': 'Карточка успешно удалена!'
+        })
+    except UserCard.DoesNotExist:
+        return JsonResponse({
+            'success': False,
+            'message': 'Карточка не найдена'
+        })
+
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('main_page:main')  # Явно указываем страницу для перенаправления
     

@@ -7,16 +7,6 @@
     <title>Рецепты</title>
     <link rel="stylesheet" href="{% static 'css/calculator.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body{
-        background-image : url("{% static '/img/img.jpg' %}");
-                        
-                        background-repeat: no-repeat;
-                        height:110vh;
-                        background-size:200vh;
-                        background-position:center;
-        }
-        </style>
 </head>
 <body>
     {% comment %} <nav class="main-nav">
@@ -55,15 +45,15 @@
                 </div>
             </div>
             <label for="weightInput">Ваш вес (кг):</label>
-            <input type="number" id="weightInput" min="30" max="200" value="{{ profile_data.weight|default:70 }}">
+            <input type="number" id="weightInput" min="30" max="200" value="{{ card_data.weight|default:70 }}">
 
             <label for="diseaseSelect">Ваша болезнь:</label>
             <select id="diseaseSelect">
-                <option value="none" {% if profile_data and profile_data.sickness == 'none' %}selected{% endif %}>Нет заболеваний</option>
-                <option value="diabetes" {% if profile_data and profile_data.sickness == 'diabetes' %}selected{% endif %}>Сахарный диабет</option>
-                <option value="celiac" {% if profile_data and profile_data.sickness == 'celiac' %}selected{% endif %}>Целиакия</option>
-                <option value="phenylketonuria" {% if profile_data and profile_data.sickness == 'phenylketonuria' %}selected{% endif %}>Фенилкетонурия</option>
-                <option value="lactose" {% if profile_data and profile_data.sickness == 'lactose' %}selected{% endif %}>Непереносимость лактозы</option>
+                <option value="none" {% if card_data and card_data.sickness == 'none' %}selected{% endif %}>Нет заболеваний</option>
+                <option value="diabetes" {% if card_data and card_data.sickness == 'diabetes' %}selected{% endif %}>Сахарный диабет</option>
+                <option value="celiac" {% if card_data and card_data.sickness == 'celiac' %}selected{% endif %}>Целиакия</option>
+                <option value="phenylketonuria" {% if card_data and card_data.sickness == 'phenylketonuria' %}selected{% endif %}>Фенилкетонурия</option>
+                <option value="lactose" {% if card_data and card_data.sickness == 'lactose' %}selected{% endif %}>Непереносимость лактозы</option>
             </select>
 
             <button onclick="closeWelcomeModal()">Продолжить</button>
@@ -147,7 +137,7 @@
                 <p>Белки: <span id="protein">0</span> г</p>
                 <p>Углеводы: <span id="carbs">0</span> г</p>
                 <p>Жиры: <span id="fat">0</span> г</p>
-                <div id="diseaseRecommendations" style="margin-top: 15px; padding: 10px; background-color: black; border-radius: 5px;">
+                <div id="diseaseRecommendations" style="margin-top: 15px; padding: 10px; background-color: #f0f8ff; border-radius: 5px;">
                     <h4>Рекомендации:</h4>
                     <p id="recommendationText"></p>
                 </div>
@@ -175,15 +165,14 @@
             return cookieValue;
         }
 
-        // Автозаполнение болезни и веса из профиля пользователя для калькулятора
-        {% if profile_data %}
+        {% if card_data %}
         document.addEventListener('DOMContentLoaded', function() {
             // Для модального окна приветствия
-            document.getElementById('weightInput').value = {{ profile_data.weight }};
-            document.getElementById('diseaseSelect').value = "{{ profile_data.sickness }}";
+            document.getElementById('weightInput').value = {{ card_data.weight }};
+            document.getElementById('diseaseSelect').value = "{{ card_data.sickness }}";
             // Для калькулятора
             if (document.getElementById('calculatorDiseaseSelect')) {
-                document.getElementById('calculatorDiseaseSelect').value = "{{ profile_data.sickness }}";
+                document.getElementById('calculatorDiseaseSelect').value = "{{ card_data.sickness }}";
             }
         });
         {% endif %}

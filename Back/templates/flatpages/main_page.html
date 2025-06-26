@@ -5,13 +5,10 @@
   <meta charset="UTF-8" />
   <title>Главная страница</title>
 
-  <!-- Шрифты и иконки -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css">
-
-  <!-- Стили -->
   <link rel="stylesheet" href="{% static 'css/styleForMain.css'%}" />
   <style>
     body{
@@ -58,7 +55,6 @@
       {% endif %}
     </div>
   </header>
- <!-- Серединка(осн.контент) -->
   <main>
     <div class="container">
       <div class="ad-left">
@@ -70,22 +66,23 @@
           {% if user.is_authenticated %}
             <form method="post">
               {% csrf_token %}
-              <label for="profile-select">Выберите профиль:</label><br>
-              <select name="profile_id" id="profile-select" onchange="this.form.submit()">
-                <option disabled {% if not selected_profile %}selected{% endif %}>-- Выберите --</option>
-                {% for profile in profiles %}
-                  <option value="{{ profile.id }}" {% if selected_profile and profile.id == selected_profile.id %}selected{% endif %}>
-                    Профиль №{{ profile.id }} (Рост: {{ profile.height }}, Вес: {{ profile.weight }}, Болезнь: {{ profile.get_sickness_display }})
+              <label for="card-select">Выберите карточку пользователя:</label><br>
+              <select name="card_id" id="card-select" onchange="this.form.submit()">
+                <option disabled {% if not selected_card %}selected{% endif %}>-- Выберите --</option>
+                {% for card in cards %}
+                  <option value="{{ card.id }}" {% if selected_card and card.id == selected_card.id %}selected{% endif %}>
+                    {{ card.name }} (Рост: {{ card.height }}, Вес: {{ card.weight }}, Болезнь: {{ card.get_sickness_display }})
                   </option>
                 {% endfor %}
               </select>
             </form>
-            {% if selected_profile %}
+            {% if selected_card %}
               <div style="margin-top: 20px;">
-                <strong>Текущий профиль:</strong><br>
-                Рост: {{ selected_profile.height }} см<br>
-                Вес: {{ selected_profile.weight }} кг<br>
-                Болезнь: {{ selected_profile.get_sickness_display }}
+                <strong>Текущая карточка:</strong><br>
+                Имя: {{ selected_card.name }}<br>
+                Рост: {{ selected_card.height }} см<br>
+                Вес: {{ selected_card.weight }} кг<br>
+                Болезнь: {{ selected_card.get_sickness_display }}
               </div>
             {% endif %}
             {% if messages %}
@@ -96,7 +93,7 @@
               </ul>
             {% endif %}
           {% else %}
-            <p>Войдите, чтобы выбрать профиль.</p>
+            <p>Войдите, чтобы выбрать карточку пользователя.</p>
           {% endif %}
         </div>
       </div>
@@ -107,7 +104,6 @@
     </div>
   </main>
 
-  <!-- Футтер -->
   <footer>
     <div class="footerNav-buttons">
       <button class="unified-button" onclick="window.open('#')">Отчёты-графики</button>
@@ -121,7 +117,6 @@
     </div>
   </footer>
 
-  <!-- Скрипт навигации(dropbox) -->
   <script>
     function navigate(select) {
       const value = select.value;

@@ -135,3 +135,14 @@ class LoginForm(forms.Form):
         }),
     )
 
+class UserCardForm(forms.ModelForm):
+    class Meta:
+        model = UserCard
+        fields = ['name', 'height', 'weight', 'sickness']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'height': forms.NumberInput(attrs={'class': 'form-control'}),
+            'weight': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.1'}),
+            'sickness': forms.Select(attrs={'class': 'form-control'}),
+        }
+
