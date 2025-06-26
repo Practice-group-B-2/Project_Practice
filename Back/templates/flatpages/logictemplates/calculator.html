@@ -7,6 +7,16 @@
     <title>Рецепты</title>
     <link rel="stylesheet" href="{% static 'css/calculator.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+     <style>
+        body{
+        background-image : url("{% static '/img/img.jpg' %}");
+                        
+                        background-repeat: no-repeat;
+                        height:110vh;
+                        background-size:200vh;
+                        background-position:center;
+        }
+        </style>
 </head>
 <body>
     {% comment %} <nav class="main-nav">
@@ -137,7 +147,7 @@
                 <p>Белки: <span id="protein">0</span> г</p>
                 <p>Углеводы: <span id="carbs">0</span> г</p>
                 <p>Жиры: <span id="fat">0</span> г</p>
-                <div id="diseaseRecommendations" style="margin-top: 15px; padding: 10px; background-color: #f0f8ff; border-radius: 5px;">
+                <div id="diseaseRecommendations" style="margin-top: 15px; padding: 10px; background-color: black; border-radius: 5px;">
                     <h4>Рекомендации:</h4>
                     <p id="recommendationText"></p>
                 </div>
